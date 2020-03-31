@@ -18,6 +18,12 @@ import com.ilhamfikri.info_kopid19.api.ApiService;
 import com.ilhamfikri.info_kopid19.api.ApiUrl;
 import com.ilhamfikri.info_kopid19.model.ModelIndonesia;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int NUM_PAGES = 4;
     private ViewPager mPager;
     private PagerAdapter pageradapter;
+    private List<ModelIndonesia> dataCorona;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,27 +86,26 @@ public class MainActivity extends AppCompatActivity {
         ApiService apiService = retrofit.create(ApiService.class);
 
         // Mengeksekusi url kemudian di tampung ke array list ModelJadwal
-        Call<ModelIndonesia> call = apiService.getIndonesia();
+        Call<List<ModelIndonesia>> call = apiService.getIndonesia();
 
-        // Membuat Response dari API
-        call.enqueue(new Callback<ModelIndonesia>() {
+        call.enqueue(new Callback<List<ModelIndonesia>>() {
             @Override
-            public void onResponse(Call<ModelIndonesia> call, Response<ModelIndonesia> response) {
-
+            public void onResponse(Call<List<ModelIndonesia>> call, Response<List<ModelIndonesia>> response) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
 
                 // Jika Response berhasil
                 if (response.isSuccessful()) {
                     // Menampung item yang ada JSON API ke dalam variabel
-                    positif = response.body().getPositif();
-                    sembuh = response.body().getSembuh();
-                    meninggal = response.body().getMeninggal();
+                    dataCorona = response.body();
+                    positif = dataCorona.get(0).getPositif();
+                    sembuh = dataCorona.get(0).getSembuh();
+                    meninggal = dataCorona.get(0).getMeninggal();
 
                     // Merubah item di layout XML menjadi variabel yang sudah di isi dari API
-                    tvpositif.setText(positif);
-                    tvmeninggal.setText(meninggal);
-                    tvsembuh.setText(sembuh);
+                    tvpositif.setText(String.valueOf(positif));
+                    tvmeninggal.setText(String.valueOf(meninggal));
+                    tvsembuh.setText(String.valueOf(sembuh));
 
                     // Jika Response gagal
                 } else {
@@ -107,9 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            // Jika tidak ada response
             @Override
-            public void onFailure(Call<ModelIndonesia> call, Throwable t) {
+            public void onFailure(Call<List<ModelIndonesia>> call, Throwable t) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "Sorry, please try again... server Down..", Toast.LENGTH_SHORT).show();

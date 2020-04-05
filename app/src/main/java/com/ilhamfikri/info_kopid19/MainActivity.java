@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private TextView tvpositif, tvsembuh, tvmeninggal, seeall;
-    private int positif, sembuh, meninggal;
+    private String positif, sembuh, meninggal;
     private static final int NUM_PAGES = 4;
     private ViewPager mPager;
     private PagerAdapter pageradapter;
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<ModelIndonesia>> call, Throwable t) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
+                Log.d(">>>", t.getLocalizedMessage());
                 Toast.makeText(MainActivity.this, "Sorry, please try again... server Down..", Toast.LENGTH_SHORT).show();
             }
         });

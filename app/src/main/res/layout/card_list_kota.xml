@@ -1,19 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/row_container"
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="?android:attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_list_kota"
+    android:minHeight="80dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="#FF402D"
+    app:cardCornerRadius="25dp"
+    android:layout_marginBottom="5dp">
 
     <LinearLayout
-        android:id="@+id/layoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:gravity="top"
-        android:orientation="horizontal">
-
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_gravity="center">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,8 +22,10 @@
             android:layout_marginBottom="5dp"
             android:drawableRight="@drawable/ic_right_icon"
             android:text="Kabupaten"
-            android:textColor="@color/darkTextColor"
+            android:textColor="@color/whiteTextColor"
             android:textSize="20sp"
             android:textStyle="bold" />
+
     </LinearLayout>
-</RelativeLayout>
+
+</androidx.cardview.widget.CardView>

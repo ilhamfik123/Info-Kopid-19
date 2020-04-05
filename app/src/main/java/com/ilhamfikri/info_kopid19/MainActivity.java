@@ -9,14 +9,18 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ilhamfikri.info_kopid19.api.ApiService;
 import com.ilhamfikri.info_kopid19.api.ApiUrl;
 import com.ilhamfikri.info_kopid19.model.ModelIndonesia;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,11 +30,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
-    private TextView tvpositif, tvsembuh, tvmeninggal;
+    private TextView tvpositif, tvsembuh, tvmeninggal, seeall;
     private int positif, sembuh, meninggal;
     private static final int NUM_PAGES = 4;
     private ViewPager mPager;
     private PagerAdapter pageradapter;
+    private List<ModelIndonesia> dataCorona;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
         tvpositif=findViewById(R.id.positif);
         tvmeninggal=findViewById(R.id.meninggal);
         tvsembuh=findViewById(R.id.sembuh);
+        seeall=findViewById(R.id.seeall);
 
+        seeall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, ListKotaActivity.class);
+                startActivity(intent);
+            }
+        });
         getIndonesia();
     }
     public void onBackPressed(){
@@ -79,37 +92,35 @@ public class MainActivity extends AppCompatActivity {
         ApiService apiService = retrofit.create(ApiService.class);
 
         // Mengeksekusi url kemudian di tampung ke array list ModelJadwal
-        Call<ModelIndonesia> call = apiService.getIndonesia();
+        Call<List<ModelIndonesia>> call = apiService.getIndonesia();
 
-        // Membuat Response dari API
-        call.enqueue(new Callback<ModelIndonesia>() {
+        call.enqueue(new Callback<List<ModelIndonesia>>() {
             @Override
-            public void onResponse(Call<ModelIndonesia> call, Response<ModelIndonesia> response) {
-
+            public void onResponse(Call<List<ModelIndonesia>> call, Response<List<ModelIndonesia>> response) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
-
+                Log.d("sukses", "onResponse:gggg ");
                 // Jika Response berhasil
                 if (response.isSuccessful()) {
                     // Menampung item yang ada JSON API ke dalam variabel
-                    positif = response.body().getPositif();
-                    sembuh = response.body().getSembuh();
-                    meninggal = response.body().getMeninggal();
-
+                    dataCorona = response.body();
+                    positif = dataCorona.get(0).getPositif();
+                    sembuh = dataCorona.get(0).getSembuh();
+                    meninggal = dataCorona.get(0).getMeninggal();
+                    Log.d("ModelIndonesia", "onResponse: asuuuuu");
                     // Merubah item di layout XML menjadi variabel yang sudah di isi dari API
-                    tvpositif.setText(positif);
-                    tvmeninggal.setText(meninggal);
-                    tvsembuh.setText(sembuh);
+                    tvpositif.setText(String.valueOf(positif));
+                    tvmeninggal.setText(String.valueOf(meninggal));
+                    tvsembuh.setText(String.valueOf(sembuh));
 
                     // Jika Response gagal
                 } else {
-
+                    Log.d("ModelIndonesia", "onResponse: asuuuuu");
                 }
             }
 
-            // Jika tidak ada response
             @Override
-            public void onFailure(Call<ModelIndonesia> call, Throwable t) {
+            public void onFailure(Call<List<ModelIndonesia>> call, Throwable t) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "Sorry, please try again... server Down..", Toast.LENGTH_SHORT).show();

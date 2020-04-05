@@ -1,6 +1,7 @@
 package com.ilhamfikri.info_kopid19;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 public class PonorogoActivity extends AppCompatActivity {

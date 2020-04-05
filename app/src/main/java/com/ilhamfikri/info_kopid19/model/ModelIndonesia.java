@@ -7,18 +7,19 @@ import java.util.List;
 
 public class ModelIndonesia {
     @SerializedName("name")
-    @Expose
     private String name;
     @SerializedName("positif")
-    @Expose
-    private int positif;
+    private String positif;
     @SerializedName("sembuh")
-    @Expose
-    private int sembuh;
+    private String sembuh;
     @SerializedName("meninggal")
-    @Expose
-    private int meninggal;
 
+    private String meninggal;
+public ModelIndonesia(String positif, String sembuh, String meninggal){
+this.positif=positif;
+this.sembuh=sembuh;
+this.meninggal=meninggal;
+}
     public String getName() {
         return name;
     }
@@ -27,27 +28,27 @@ public class ModelIndonesia {
         this.name = name;
     }
 
-    public int getPositif() {
+    public String getPositif() {
         return positif;
     }
 
-    public void setPositif(int positif) {
+    public void setPositif(String positif) {
         this.positif = positif;
     }
 
-    public int getSembuh() {
+    public String getSembuh() {
         return sembuh;
     }
 
-    public void setSembuh(int sembuh) {
+    public void setSembuh(String sembuh) {
         this.sembuh = sembuh;
     }
 
-    public int getMeninggal() {
+    public String getMeninggal() {
         return meninggal;
     }
 
-    public void setMeninggal(int meninggal) {
+    public void setMeninggal(String meninggal) {
         this.meninggal = meninggal;
     }
 

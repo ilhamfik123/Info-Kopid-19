@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.ilhamfikri.info_kopid19.api.ApiService;
 import com.ilhamfikri.info_kopid19.api.ApiUrl;
 import com.ilhamfikri.info_kopid19.model.ModelIndonesia;
+import com.ilhamfikri.info_kopid19.model.Provinsi;
 
 import java.util.List;
 
@@ -30,12 +31,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
-    private TextView tvpositif, tvsembuh, tvmeninggal, seeall;
-    private String positif, sembuh, meninggal;
+    private TextView tvpositif, tvsembuh, tvmeninggal, tvjatimpositif, tvjatimsembuh, tvjatimmeninggal, seeall;
+    private String positif, sembuh, meninggal, jatimpositif, jatimsembuh, jatimmeninggal;
     private static final int NUM_PAGES = 4;
     private ViewPager mPager;
     private PagerAdapter pageradapter;
     private List<ModelIndonesia> dataCorona;
+    private List<Provinsi> dataCoronajatim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         tvpositif=findViewById(R.id.positif);
         tvmeninggal=findViewById(R.id.meninggal);
         tvsembuh=findViewById(R.id.sembuh);
+        tvjatimpositif=findViewById(R.id.jatim_positif);
+        tvjatimmeninggal=findViewById(R.id.jatim_meninggal);
+        tvjatimsembuh=findViewById(R.id.jatim_sembuh);
         seeall=findViewById(R.id.seeall);
 
         seeall.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         getIndonesia();
+        getProvinsi();
     }
     public void onBackPressed(){
         if(mPager.getCurrentItem()==0){
@@ -91,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         // Membuat objek Apiservice
         ApiService apiService = retrofit.create(ApiService.class);
 
-        // Mengeksekusi url kemudian di tampung ke array list ModelJadwal
         Call<List<ModelIndonesia>> call = apiService.getIndonesia();
 
         call.enqueue(new Callback<List<ModelIndonesia>>() {
@@ -99,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<ModelIndonesia>> call, Response<List<ModelIndonesia>> response) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
-                Log.d("sukses", "onResponse:gggg ");
                 // Jika Response berhasil
                 if (response.isSuccessful()) {
                     // Menampung item yang ada JSON API ke dalam variabel
@@ -107,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     positif = dataCorona.get(0).getPositif();
                     sembuh = dataCorona.get(0).getSembuh();
                     meninggal = dataCorona.get(0).getMeninggal();
-                    Log.d("ModelIndonesia", "onResponse: asuuuuu");
                     // Merubah item di layout XML menjadi variabel yang sudah di isi dari API
                     tvpositif.setText(String.valueOf(positif));
                     tvmeninggal.setText(String.valueOf(meninggal));
@@ -115,12 +118,54 @@ public class MainActivity extends AppCompatActivity {
 
                     // Jika Response gagal
                 } else {
-                    Log.d("ModelIndonesia", "onResponse: asuuuuu");
                 }
             }
 
             @Override
             public void onFailure(Call<List<ModelIndonesia>> call, Throwable t) {
+                // Menghilangkan Loading Screen
+                progressDialog.dismiss();
+                Log.d(">>>", t.getLocalizedMessage());
+                Toast.makeText(MainActivity.this, "Sorry, please try again... server Down..", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void getProvinsi(){
+
+        // Menyambungkan aplikasi dengan internet
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiUrl.URL_KAB)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Membuat objek Apiservice
+        ApiService apiService = retrofit.create(ApiService.class);
+
+        Call<List<Provinsi>> call = apiService.getProvinsi();
+
+        call.enqueue(new Callback<List<Provinsi>>() {
+            @Override
+            public void onResponse(Call<List<Provinsi>> call, Response<List<Provinsi>> response) {
+
+                // Jika Response berhasil
+                if (response.isSuccessful()) {
+                    // Menampung item yang ada JSON API ke dalam variabel
+                    dataCoronajatim = response.body();
+                    jatimpositif = dataCoronajatim.get(0).getPositif();
+                    jatimsembuh = dataCoronajatim.get(0).getSembuh();
+                    jatimmeninggal = dataCoronajatim.get(0).getMeninggal();
+                    // Merubah item di layout XML menjadi variabel yang sudah di isi dari API
+                    tvjatimpositif.setText(String.valueOf(jatimpositif));
+                    tvjatimmeninggal.setText(String.valueOf(jatimmeninggal));
+                    tvjatimsembuh.setText(String.valueOf(jatimsembuh));
+
+                    // Jika Response gagal
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Provinsi>> call, Throwable t) {
                 // Menghilangkan Loading Screen
                 progressDialog.dismiss();
                 Log.d(">>>", t.getLocalizedMessage());

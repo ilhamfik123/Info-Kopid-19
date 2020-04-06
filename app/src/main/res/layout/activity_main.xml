@@ -126,9 +126,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <include layout="@layout/card_positif"/>
-                <include layout="@layout/card_sembuh"/>
-                <include layout="@layout/card_meninggal"/>
+                <include layout="@layout/card_indopositif"/>
+                <include layout="@layout/card_indosembuh"/>
+                <include layout="@layout/card_indomeninggal"/>
             </LinearLayout>
             <TextView
                 style="@style/viewParent.headerText"
@@ -138,9 +138,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <include layout="@layout/card_positif"/>
-                <include layout="@layout/card_sembuh"/>
-                <include layout="@layout/card_meninggal"/>
+                <include layout="@layout/card_jatimpositif"/>
+                <include layout="@layout/card_jatimsembuh"/>
+                <include layout="@layout/card_jatimmeninggal"/>
             </LinearLayout>
 
             <RelativeLayout

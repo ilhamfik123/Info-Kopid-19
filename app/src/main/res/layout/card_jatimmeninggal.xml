@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minHeight="120dp"
     app:cardElevation="10dp"
-    app:cardBackgroundColor="#FB8C00"
+    app:cardBackgroundColor="#8E24AA"
     app:cardCornerRadius="16dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp">
@@ -18,29 +18,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Jawa Timur"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Total Positif"
+            android:text="Total Meninggal"
             android:textColor="@color/whiteTextColor"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="10dp"/>
         <TextView
+            android:id="@+id/jatim_meninggal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="1000"
             android:textColor="@color/whiteTextColor"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

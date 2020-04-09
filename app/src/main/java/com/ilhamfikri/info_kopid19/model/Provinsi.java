@@ -13,13 +13,13 @@ public class Provinsi {
     @SerializedName("Longitude")
     private String mLongitude;
     @SerializedName("Meninggal")
-    private String mMeninggal;
+    private int mMeninggal;
     @SerializedName("Nama_Provinsi")
     private String mNamaProvinsi;
     @SerializedName("Positif")
-    private String mPositif;
+    private int mPositif;
     @SerializedName("Sembuh")
-    private String mSembuh;
+    private int mSembuh;
 
     public String getLastUpdate() {
         return mLastUpdate;
@@ -45,11 +45,11 @@ public class Provinsi {
         mLongitude = longitude;
     }
 
-    public String getMeninggal() {
+    public int getMeninggal() {
         return mMeninggal;
     }
 
-    public void setMeninggal(String meninggal) {
+    public void setMeninggal(int meninggal) {
         mMeninggal = meninggal;
     }
 
@@ -61,19 +61,19 @@ public class Provinsi {
         mNamaProvinsi = namaProvinsi;
     }
 
-    public String getPositif() {
+    public int getPositif() {
         return mPositif;
     }
 
-    public void setPositif(String positif) {
+    public void setPositif(int positif) {
         mPositif = positif;
     }
 
-    public String getSembuh() {
+    public int getSembuh() {
         return mSembuh;
     }
 
-    public void setSembuh(String sembuh) {
+    public void setSembuh(int sembuh) {
         mSembuh = sembuh;
     }
 

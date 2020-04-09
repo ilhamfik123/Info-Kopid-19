@@ -15,5 +15,5 @@ public interface ApiService {
     Call<List<ModelIndonesia>> getIndonesia();
 
     @GET(ApiUrl.URL_KAB)
-    Call<List<Provinsi>> getProvinsi();
+    Call<Provinsi> getProvinsi();
 }
